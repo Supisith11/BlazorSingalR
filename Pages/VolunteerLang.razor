@@ -1,0 +1,38 @@
+﻿@page "/choose"
+@inject NavigationManager Navigation
+
+<div class="container d-flex justify-content-center align-items-center vh-100" style="background-color:  #96D9F2;">
+    <div class="card p-4 border border-primary text-center" style="max-width: 500px; background-color: white;">
+        <h2 class="text-primary">CHOOSE THE LANGUAGE</h2>
+        <p>Tell us what language you would like a translation for</p>
+
+        <select class="form-select mt-3">
+            <option>Select your language</option>
+            <option value="spanish">Spanish</option>
+            <option value="english">English</option>
+        </select>
+        <button class="btn btn-primary mt-3" @onclick="startVolunteering">Volunteer</button>
+
+    </div>
+</div>
+
+@code {
+    protected string language { get; set; } = "";
+    protected Dictionary<string, LanguageQueues> languageQueues = new();
+
+    public void startVolunteering()
+    {
+        if (!languageQueues.ContainsKey(language))
+            languageQueues[language] = new LanguageQueues();
+
+        if (languageQueues[language].HelpQueue.Count > 0)
+        {
+            var matchedUser = languageQueues[language].HelpQueue[0];
+            languageQueues[language].HelpQueue.RemoveAt(0);
+        }
+        else
+        {
+            languageQueues[language].VolunteerQueue.Add("Volunteer"); 
+        }
+    }
+}

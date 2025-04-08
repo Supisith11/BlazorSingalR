@@ -1,0 +1,98 @@
+﻿@page "/chat"
+@rendermode InteractiveWebAssembly
+@using ChatApp2.Shared
+@using Microsoft.AspNetCore.SignalR.Client
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Chat> Localizer
+@inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
+@implements IAsyncDisposable
+
+
+<PageTitle>Chat</PageTitle>
+<div class="page-container">
+    <div class="content-box">
+<p>Chat with people</p>
+
+<div class="form-group">
+	<label>
+				@Localizer["Username"]:
+		<input @bind="userName" />
+	</label>
+</div>
+<div class="form-group">
+	<label>
+		Language:
+		<input @bind="language" />
+	</label>
+</div>
+<div class="form-group">
+	<label>
+		Type:
+		<select @bind="type">
+			<option value=""></option>
+			<option value="helper">Helper</option>
+			<option value="user">User</option>
+		</select>
+	</label>
+</div>
+<button @onclick="LookForMatch">Match with someone</button>
+	</div>
+</div>
+@code {
+	private string? userName;
+	private string? language;
+	private string? type;
+	private HubConnection? hubConnection;
+
+	protected override async Task OnInitializedAsync()
+	{
+		hubConnection = new HubConnectionBuilder()
+			.WithUrl(Navigation.ToAbsoluteUri("/matchhub"))
+			.Build();
+
+		hubConnection.On<string, string>("Matched", (sender, roomId) =>
+		{
+			// InvokeAsync(StateHasChanged);
+			Navigation.NavigateTo($"/chat/{roomId}", false);
+		});
+
+		await hubConnection.StartAsync();
+	}
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		try
+		{
+			if (string.IsNullOrWhiteSpace(userName))
+			{
+				userName = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "chatUserName");
+			}
+		}
+		catch
+		{
+			// Ignore errors during JS interop
+		}
+	}
+
+	private async Task LookForMatch()
+	{
+		// Update URL without reloading the page
+		if (hubConnection is not null && !string.IsNullOrWhiteSpace(userName) && !string.IsNullOrWhiteSpace(language) && !string.IsNullOrWhiteSpace(language))
+		{
+			System.Console.WriteLine($"Looking for match with values: {userName}, {language}, {type}");
+			var userType = type == "helper" ? UserType.Helper : UserType.User;
+			await JSRuntime.InvokeVoidAsync("localStorage.setItem", "chatUserName", userName);
+			await hubConnection.SendAsync("JoinQueue", userType, language);
+		}
+	}
+
+	public async ValueTask DisposeAsync()
+	{
+		if (hubConnection is not null)
+		{
+			await hubConnection.SendAsync("LeaveQueue", type, language);
+			await hubConnection.DisposeAsync();
+		}
+	}
+}

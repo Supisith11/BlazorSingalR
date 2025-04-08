@@ -1,0 +1,57 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Localization;
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Web;
+@using System.Globalization;
+@inject NavigationManager Navigation
+@rendermode InteractiveWebAssembly
+@using ChatApp2.Client
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Home> Localizer
+
+<div class="container-fluid d-flex flex-column min-vh-100">
+    <section class="hero text-center py-5">
+        <PageTitle>@Localizer["Message"]</PageTitle>    
+        <p class="text-muted">Join a community where language barriers are broken down through real-time volunteer translation services. </p>
+    </section>
+
+    <section class="banner text-center py-3">
+        <h2 class="banner-text">
+            FIND TRANSLATIONS FASTER AND <br> EASIER
+        </h2>
+    </section>
+
+    <section class="volunteer-translation text-center flex-grow-1 py-5">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="NewFolder1/volunteer-icon-10.png" alt="Volunteer" class="section-icon mt-5" />
+                <div class="text">
+                    <h3 class="text-purple mt-5">VOLUNTEER</h3>
+                    <a href="/choose" target="_blank" class="btn btn-outline-primary mt-4">Volunteer today</a>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <img src="NewFolder1/translate.png" alt="Need Translation Help?" class="small-icon mt-5" />
+                <div class="text1">
+
+                    <h3 class="text-purple mt-5">TRANSLATION HELP</h3>
+                    <a href="/Client" target="_blank" class="btn btn-outline-primary mt-4">Get Started</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center py-3 bg-light mt-auto">
+        <p>Contact Us</p>
+        <p>Supisith11@gmail.com</p>
+        <p>214-429-0378 | hello@reallygreatsite.com |</p>
+    </footer>
+</div>
+
+@code {
+
+
+}

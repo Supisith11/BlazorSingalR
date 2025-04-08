@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Localization;
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Web;
+@using System.Globalization;
+@inject NavigationManager Navigation
+
+
+<div class="container-fluid" style="background-color: var(--color-lightBlue)">
+    <header class="d-flex justify-content-between align-items-center py-3">
+        <NavLink href="/" class="text-dark text-decoration-none fs-2 fw-bold banner-top">ChatApp</NavLink>
+
+        <ul class="nav d-flex ms-auto">
+            <li class="nav-item">
+                <NavLink class="nav-link" href="/">
+                    <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+                </NavLink>
+
+            </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="/chat">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Chat
+                </NavLink>
+            </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="/volunteer">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Volunteer
+                </NavLink>
+            </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="/about">
+                    <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> About
+                </NavLink>
+
+            </li>
+
+            <li class="nav-item ms-3">
+                <select class="form-select">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                </select>
+
+            </li>
+        </ul>
+    </header>
+</div>
+
+@code {
+
+    }
+

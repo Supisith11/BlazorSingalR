@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\NewFolder1\translate.png" />
+    <None Include="wwwroot\NewFolder1\volunteer-icon-10.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ChatApp2.Shared\ChatApp2.Shared.csproj" />
+    <ProjectReference Include="..\ChatApp2.Client\ChatApp2.Client.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.3" />
+    <PackageReference Include="SoloX.BlazorJsonLocalization" Version="3.0.0-alpha.1" />
+    <PackageReference Include="SoloX.BlazorJsonLocalization.ServerSide" Version="3.0.0-alpha.1" />
+  </ItemGroup>
+
+</Project>
